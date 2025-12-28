@@ -23,8 +23,11 @@ def calculate_entrapment_probability(node, cell):
     Returns:
         float: Probability of entrapment.
     """
-    # Current oversimplification: constant probability regardless of node characteristics
-    return 0.5
+    # Biologically plausible linear model: larger nodes have more complex sinus structure
+    # leading to higher entrapment probability. Base probability 0.2 for smallest nodes,
+    # with 0.1 increase per cm. Cap at 0.9 for realism.
+    probability = 0.2 + (node.size * 0.1)
+    return min(probability, 0.9)
 
 def simulate_metastasis(nodes, cells):
     """
